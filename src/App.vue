@@ -49,7 +49,10 @@
     </v-app-bar>
 
     <v-main v-bar style="max-height: 100vh; position: relative;">
-      <router-view style="margin: 10px 0 10px 10px;" :key="$route.component" />
+      <router-view
+        style="margin: 10px 0 10px 10px; height: 100%"
+        :key="$route.component"
+      />
     </v-main>
 
     <div

@@ -1,85 +1,99 @@
 <template>
   <div v-if="photos">
-    <MyConfirmationDialog ref="confirm" />
-
-    <div class="d-flex flex-wrap justify-center">
-      <MyImgCarrousel
-        :galleryLength="galleryLength"
-        :images="photosUrls"
-        :selectedImageIndex="selectedPhotoIndex"
-        :pagingIndex="pagingIndex"
-        @new-selected-image-index="
-          (newSelectedPhotoIndex) =>
-            (selectedPhotoIndex = newSelectedPhotoIndex)
-        "
-        @new-paging-index="(newPagingIndex) => (pagingIndex = newPagingIndex)"
-      />
+    <div
+      v-if="!photos.length"
+      class="d-flex justify-center"
+      style="height: 100%; align-items: center;"
+    >
+      <v-btn color="action" dark class="mb-2" @click="addItem">
+        <v-icon>
+          mdi-plus
+        </v-icon>
+        Adicione sua primeira foto
+      </v-btn>
     </div>
+    <div v-show="photos.length">
+      <MyConfirmationDialog ref="confirm" />
 
-    <div class="d-flex justify-center" style="margin-bottom: 10px">
-      <div
-        class="d-flex justify-space-between"
-        style="width: 90%; position: relative"
-      >
-        <div style="position: absolute; bottom: 0px;" color="primary">
-          {{ pagingIndex + selectedPhotoIndex + 1 }}/{{ photos.length }}
-        </div>
-
-        <div
-          style="-webkit-text-stroke: 0.5px black; font-size: 25px; text-align: center; position: absolute; bottom: 0px; left: 50%; transform: translateX(-50%)"
-          color="primary"
-        >
-          {{ selectedPhoto ? selectedPhoto.title : null }}
-        </div>
-
-        <v-speed-dial
-          v-model="fab"
-          direction="top"
-          :open-on-hover="false"
-          transition="slide-y-reverse-transition"
-          style="position: absolute; bottom: 5px; right: 5px"
-        >
-          <template v-slot:activator>
-            <v-btn v-model="fab" color="primary darken-2" dark fab>
-              <v-icon v-if="fab">mdi-close</v-icon>
-              <v-icon v-else>mdi-dots-vertical</v-icon>
-            </v-btn>
-          </template>
-          <v-btn fab dark small color="green" @click="editItem">
-            <v-icon>mdi-pencil</v-icon>
-          </v-btn>
-          <v-btn fab dark small color="indigo" @click="addItem">
-            <v-icon>mdi-plus</v-icon>
-          </v-btn>
-          <v-btn fab dark small color="red" @click="deleteItem">
-            <v-icon>mdi-delete</v-icon>
-          </v-btn>
-        </v-speed-dial>
+      <div class="d-flex flex-wrap justify-center">
+        <MyImgCarrousel
+          :galleryLength="galleryLength"
+          :images="photosUrls"
+          :selectedImageIndex="selectedPhotoIndex"
+          :pagingIndex="pagingIndex"
+          @new-selected-image-index="
+            (newSelectedPhotoIndex) =>
+              (selectedPhotoIndex = newSelectedPhotoIndex)
+          "
+          @new-paging-index="(newPagingIndex) => (pagingIndex = newPagingIndex)"
+        />
       </div>
-    </div>
 
-    <div class="d-flex flex-wrap justify-center">
-      <MyImgGallery
-        :galleryLength="galleryLength"
-        :images="photosThumbnails"
-        :selectedImageIndex="selectedPhotoIndex"
-        :pagingIndex="pagingIndex"
-        @new-selected-image-index="
-          (newSelectedPhotoIndex) =>
-            (selectedPhotoIndex = newSelectedPhotoIndex)
-        "
-        @new-paging-index="(newPagingIndex) => (pagingIndex = newPagingIndex)"
+      <div class="d-flex justify-center" style="margin-bottom: 10px">
+        <div
+          class="d-flex justify-space-between"
+          style="width: 90%; position: relative"
+        >
+          <div style="position: absolute; bottom: 0px;" color="primary">
+            {{ pagingIndex + selectedPhotoIndex + 1 }}/{{ photos.length }}
+          </div>
+
+          <div
+            style="-webkit-text-stroke: 0.5px black; font-size: 25px; text-align: center; position: absolute; bottom: 0px; left: 50%; transform: translateX(-50%)"
+            color="primary"
+          >
+            {{ selectedPhoto ? selectedPhoto.title : null }}
+          </div>
+
+          <v-speed-dial
+            v-model="fab"
+            direction="top"
+            :open-on-hover="false"
+            transition="slide-y-reverse-transition"
+            style="position: absolute; bottom: 5px; right: 5px"
+          >
+            <template v-slot:activator>
+              <v-btn v-model="fab" color="primary darken-2" dark fab>
+                <v-icon v-if="fab">mdi-close</v-icon>
+                <v-icon v-else>mdi-dots-vertical</v-icon>
+              </v-btn>
+            </template>
+            <v-btn fab dark small color="green" @click="editItem">
+              <v-icon>mdi-pencil</v-icon>
+            </v-btn>
+            <v-btn fab dark small color="indigo" @click="addItem">
+              <v-icon>mdi-plus</v-icon>
+            </v-btn>
+            <v-btn fab dark small color="red" @click="deleteItem">
+              <v-icon>mdi-delete</v-icon>
+            </v-btn>
+          </v-speed-dial>
+        </div>
+      </div>
+
+      <div class="d-flex flex-wrap justify-center">
+        <MyImgGallery
+          :galleryLength="galleryLength"
+          :images="photosThumbnails"
+          :selectedImageIndex="selectedPhotoIndex"
+          :pagingIndex="pagingIndex"
+          @new-selected-image-index="
+            (newSelectedPhotoIndex) =>
+              (selectedPhotoIndex = newSelectedPhotoIndex)
+          "
+          @new-paging-index="(newPagingIndex) => (pagingIndex = newPagingIndex)"
+        />
+      </div>
+
+      <MyDialogForm
+        :formTitle="formTitle"
+        :dialog="dialog"
+        :headers="headers"
+        :initialValues="editedItem"
+        @close="close"
+        @save="save"
       />
     </div>
-
-    <MyDialogForm
-      :formTitle="formTitle"
-      :dialog="dialog"
-      :headers="headers"
-      :initialValues="editedItem"
-      @close="close"
-      @save="save"
-    />
   </div>
 </template>
 
