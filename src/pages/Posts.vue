@@ -22,7 +22,7 @@ export default {
 
   data() {
     return {
-      posts: [],
+      posts: null,
       headers: [
         { text: "Título", value: "title" },
         { text: "Conteúdo", value: "body" },

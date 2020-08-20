@@ -1,5 +1,7 @@
 <template>
   <div v-if="photos">
+    <MyConfirmationDialog ref="confirm" />
+
     <div class="d-flex flex-wrap justify-center">
       <MyImgCarrousel
         :galleryLength="galleryLength"
@@ -85,6 +87,7 @@
 import MyImgCarrousel from "../components/MyImgCarrousel";
 import MyImgGallery from "../components/MyImgGallery";
 import MyDialogForm from "../components/MyDialogForm";
+import MyConfirmationDialog from "../components/MyConfirmationDialog";
 import photosAPI from "../api/photos";
 
 export default {
@@ -94,11 +97,12 @@ export default {
     MyImgCarrousel,
     MyImgGallery,
     MyDialogForm,
+    MyConfirmationDialog,
   },
 
   data() {
     return {
-      photos: [],
+      photos: null,
       selectedPhotoIndex: 0,
       pagingIndex: 0,
       galleryLength: 10,
@@ -142,7 +146,13 @@ export default {
     },
 
     async deleteItem() {
-      if (confirm("Tem certeza que deseja remover esse item?")) {
+      if (
+        await this.$refs.confirm.open(
+          "Remover",
+          "Tem certeza que deseja remover esse item?",
+          { color: "red" }
+        )
+      ) {
         await photosAPI.deletePhoto(this.selectedPhoto.id);
         this.photos.splice(this.pagingIndex + this.selectedPhotoIndex, 1);
       }

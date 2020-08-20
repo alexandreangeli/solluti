@@ -16,7 +16,7 @@
           aspect-ratio="1"
           :src="image"
           max-height="100%"
-          max-width="600px"
+          max-width="500px"
         />
       </div>
     </v-carousel-item>

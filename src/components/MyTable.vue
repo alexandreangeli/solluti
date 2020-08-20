@@ -1,45 +1,49 @@
 <template>
-  <v-data-table
-    :headers="headersWithActions"
-    :items="items"
-    disable-pagination
-    hide-default-footer
-  >
-    <template v-slot:top>
-      <v-toolbar>
-        <v-toolbar-title>{{ title }}</v-toolbar-title>
-        <v-spacer></v-spacer>
-        <v-btn color="action" dark class="mb-2" @click="editItem">
-          <v-icon>
-            mdi-plus
+  <div>
+    <MyConfirmationDialog ref="confirm" />
+    <v-data-table
+      :headers="headersWithActions"
+      :items="items"
+      disable-pagination
+      hide-default-footer
+    >
+      <template v-slot:top>
+        <v-toolbar>
+          <v-toolbar-title>{{ title }}</v-toolbar-title>
+          <v-spacer></v-spacer>
+          <v-btn color="action" dark class="mb-2" @click="editItem">
+            <v-icon>
+              mdi-plus
+            </v-icon>
+          </v-btn>
+          <MyDialogForm
+            :formTitle="formTitle"
+            :dialog="dialog"
+            :headers="headers"
+            :initialValues="editedItem"
+            @close="close"
+            @save="save"
+          />
+        </v-toolbar>
+      </template>
+      <template v-slot:[`item.actions`]="{ item }">
+        <div class="d-flex justify-space-around">
+          <v-icon small class="mr-2" @click="editItem(item)" color="positive">
+            mdi-pencil
           </v-icon>
-        </v-btn>
-        <MyDialogForm
-          :formTitle="formTitle"
-          :dialog="dialog"
-          :headers="headers"
-          :initialValues="editedItem"
-          @close="close"
-          @save="save"
-        />
-      </v-toolbar>
-    </template>
-    <template v-slot:[`item.actions`]="{ item }">
-      <div class="d-flex justify-space-around">
-        <v-icon small class="mr-2" @click="editItem(item)" color="positive">
-          mdi-pencil
-        </v-icon>
 
-        <v-icon small @click="deleteItem(item)" color="negative">
-          mdi-delete
-        </v-icon>
-      </div>
-    </template>
-  </v-data-table>
+          <v-icon small @click="deleteItem(item)" color="negative">
+            mdi-delete
+          </v-icon>
+        </div>
+      </template>
+    </v-data-table>
+  </div>
 </template>
 
 <script>
 import MyDialogForm from "./MyDialogForm";
+import MyConfirmationDialog from "./MyConfirmationDialog";
 
 export default {
   props: {
@@ -63,6 +67,7 @@ export default {
 
   components: {
     MyDialogForm,
+    MyConfirmationDialog,
   },
 
   data: () => ({
@@ -101,9 +106,15 @@ export default {
       this.dialog = true;
     },
 
-    deleteItem(item) {
+    async deleteItem(item) {
       const index = this.items.indexOf(item);
-      if (confirm("Tem certeza que deseja remover esse item?")) {
+      if (
+        await this.$refs.confirm.open(
+          "Remover",
+          "Tem certeza que deseja remover esse item?",
+          { color: "red" }
+        )
+      ) {
         this.$emit("delete", item, index);
       }
     },

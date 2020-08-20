@@ -29,12 +29,12 @@
 
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="primary" text @click="$emit('close')">Cancel</v-btn>
+        <v-btn color="grey" text @click="$emit('close')">Cancelar</v-btn>
         <v-btn
           color="primary"
           text
           @click="$refs.form.validate() ? $emit('save', editedItem) : null"
-          >Save</v-btn
+          >Salvar</v-btn
         >
       </v-card-actions>
     </v-card>
