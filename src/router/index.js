@@ -1,7 +1,7 @@
 import VueRouter from "vue-router";
-import Home from "../components/Home";
-import Posts from "../components/Posts";
-import Photos from "../components/Photos";
+import Home from "../pages/Home";
+import Posts from "../pages/Posts";
+import Photos from "../pages/Photos";
 
 export const router = new VueRouter({
   routes: [

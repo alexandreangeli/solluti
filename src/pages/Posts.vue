@@ -1,7 +1,8 @@
 <template>
   <MyTable
-    title="Posts"
-    objectName="Post"
+    v-if="posts"
+    title="Postagens"
+    objectName="Postagem"
     :items="posts"
     :headers="headers"
     @save="savePost"
@@ -11,7 +12,7 @@
 
 <script>
 import postsAPI from "../api/posts";
-import MyTable from "./MyTable";
+import MyTable from "../components/MyTable";
 export default {
   name: "Posts",
 
