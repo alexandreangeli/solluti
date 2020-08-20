@@ -13,13 +13,10 @@
               :color="
                 $router.history.current.name == item.route ? 'primary' : ''
               "
-              >{{ item.icon }}</v-icon
-            >
+            >{{ item.icon }}</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title>
-              {{ item.text }}
-            </v-list-item-title>
+            <v-list-item-title>{{ item.text }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -42,17 +39,12 @@
         class="mr-12 align-center"
         style="cursor: pointer;"
         @click="() => goToRoute('home')"
-      >
-        SOLLUTI
-      </v-toolbar-title>
+      >SOLLUTI</v-toolbar-title>
       <v-spacer></v-spacer>
     </v-app-bar>
 
-    <v-main v-bar style="max-height: 100vh; position: relative;">
-      <router-view
-        style="margin: 10px 0 10px 10px; height: 100%;"
-        :key="$route.component"
-      />
+    <v-main v-bar style="max-height: 100vh; position: relative; margin-bottom: 10px">
+      <router-view style="margin: 10px 0 0 10px; height: 100%;" :key="$route.component" />
     </v-main>
 
     <div
