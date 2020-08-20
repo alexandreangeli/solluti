@@ -1,5 +1,6 @@
 <template>
   <v-dialog
+    ref="dialog"
     v-model="dialog"
     :max-width="options.width"
     :style="{ zIndex: options.zIndex }"
@@ -12,8 +13,8 @@
       <v-card-text v-show="!!message" class="pa-4">{{ message }}</v-card-text>
       <v-card-actions class="pt-0">
         <v-spacer></v-spacer>
-        <v-btn color="grey" text @click.native="cancel">Cancelar</v-btn>
-        <v-btn color="primary darken-1" text @click.native="agree">Sim</v-btn>
+        <v-btn ref="cancel" color="grey" text @click.native="cancel">Cancelar</v-btn>
+        <v-btn ref="agree" color="primary darken-1" text @click.native="agree">Sim</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
