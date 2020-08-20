@@ -10,69 +10,54 @@ describe('MyConfirmationDialog', () => {
   let dialogWrapper = wrapper.findComponent({
     ref: 'dialog'
   })
+  let titleWrapper = wrapper.findComponent({
+    ref: 'title'
+  })
+  let messageWrapper = wrapper.findComponent({
+    ref: 'message'
+  })
+  let cancelWrapper = wrapper.findComponent({
+    ref: 'cancel'
+  })
+  let agreeWrapper = wrapper.findComponent({
+    ref: 'agree'
+  })
+
+  let title = "Title"
+  let message = "Message"
 
   it("starts closed", () => {
     expect(dialogWrapper.vm.value).toBe(false)
   })
 
   it('opens dialog', () => {
-    wrapper.vm.open("Title", "Message", {})
+    wrapper.vm.open(title, message, {})
 
     wrapper.vm.$nextTick(() => expect(dialogWrapper.vm.value).toBe(true))
   })
 
   it('has right title and message', () => {
-    wrapper.vm.open("Title", "Message", {})
+    wrapper.vm.open(title, message, {})
 
-    expect(wrapper.vm.title).toBe('Title')
-    expect(wrapper.vm.message).toBe('Message')
+    expect(titleWrapper.text()).toBe(title)
+    expect(messageWrapper.text()).toBe(message)
   })
 
   it('closes falsy on cancel click', async () => {
-    setTimeout(() => {
-      let cancelWrapper = wrapper.findComponent({
-        ref: 'cancel'
-      })
+    wrapper.vm.$nextTick(() => cancelWrapper.trigger('click'))
 
-      cancelWrapper.trigger('click')
-    }, 0.1)
-
-    await wrapper.vm.open("Title", "Message", {}).then((value) => {
+    await wrapper.vm.open(title, message, {}).then((value) => {
       expect(value).toBe(false)
       wrapper.vm.$nextTick(() => expect(dialogWrapper.vm.value).toBe(false))
     })
   })
 
   it('closes truthy on agree click', async () => {
-    setTimeout(() => {
-      let cancelWrapper = wrapper.findComponent({
-        ref: 'agree'
-      })
+    wrapper.vm.$nextTick(() => agreeWrapper.trigger('click'))
 
-      cancelWrapper.trigger('click')
-    }, 0.1)
-
-    await wrapper.vm.open("Title", "Message", {}).then((value) => {
+    await wrapper.vm.open(title, message, {}).then((value) => {
       expect(value).toBe(true)
       wrapper.vm.$nextTick(() => expect(dialogWrapper.vm.value).toBe(false))
     })
   })
-
-
-  // it('has right title and message', () => {})
-
-
-  // it('sets the correct default data', () => {
-  //   expect(typeof MyConfirmationDialog.data).toBe('function')
-  //   const defaultData = MyConfirmationDialog.data()
-  //   expect(defaultData.message).toBe('hello!')
-  // })
-
-  // it('correctly sets the message when created', () => {
-  //   expect(wrapper.vm.$data.message).toBe('bye!')
-  // })
-
-  // it('renders the correct message', () => {
-  //   expect(wrapper.text()).toBe('bye!')
-  // })
 })
