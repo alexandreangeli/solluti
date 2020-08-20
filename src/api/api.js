@@ -2,27 +2,27 @@ import store from "../store";
 import axios from "axios";
 
 const http = axios.create({
-  baseURL: "https://jsonplaceholder.typicode.com/",
-  // baseURL: "https://my-json-server.typicode.com/alexandreangeli/solluti",
+  // baseURL: "https://jsonplaceholder.typicode.com/",
+  baseURL: "https://my-json-server.typicode.com/alexandreangeli/solluti",
 });
 
 http.interceptors.request.use(
-  function(config) {
+  function (config) {
     store.commit("setLoading", true);
     return config;
   },
-  function(error) {
+  function (error) {
     store.commit("setLoading", false);
     return Promise.reject(error);
   }
 );
 
 http.interceptors.response.use(
-  function(response) {
+  function (response) {
     store.commit("setLoading", false);
     return response;
   },
-  function(error) {
+  function (error) {
     store.commit("setLoading", false);
     return Promise.reject(error);
   }
