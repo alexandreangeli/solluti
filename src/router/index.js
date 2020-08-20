@@ -4,6 +4,8 @@ import Posts from "../pages/Posts";
 import Photos from "../pages/Photos";
 
 export const router = new VueRouter({
+
+  mode: 'hash',
   routes: [{
       path: "",
       name: "home",
