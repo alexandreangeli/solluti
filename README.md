@@ -5,6 +5,11 @@
 npm install
 ```
 
+### Run unit tests
+```
+npm run test:unit
+```
+
 ### Compiles and hot-reloads for development
 ```
 npm run serve
