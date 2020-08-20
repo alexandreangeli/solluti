@@ -19,5 +19,11 @@ export const router = new VueRouter({
       name: "photos",
       component: Photos
     },
+    {
+      path: '*',
+      redirect: {
+        name: 'home'
+      }
+    }
   ],
 });
