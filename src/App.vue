@@ -1,5 +1,5 @@
 <template>
-  <v-app style="display: flex">
+  <v-app style="display: flex;">
     <v-navigation-drawer v-model="drawer" app clipped>
       <v-list dense>
         <v-list-item
@@ -33,14 +33,14 @@
         height="auto"
         max-width="25px"
         large
-        src="http://www.solluti.com.br/img/navbar/logotipo-branco.png"
-        style="cursor: pointer"
+        :src="require('./assets/logotipo-branco.png')"
+        style="cursor: pointer;"
         @click="() => goToRoute('home')"
       />
 
       <v-toolbar-title
-        class="mr-12 align-center "
-        style="cursor: pointer"
+        class="mr-12 align-center"
+        style="cursor: pointer;"
         @click="() => goToRoute('home')"
       >
         SOLLUTI
@@ -50,21 +50,29 @@
 
     <v-main v-bar style="max-height: 100vh; position: relative;">
       <router-view
-        style="margin: 10px 0 10px 10px; height: 100%"
+        style="margin: 10px 0 10px 10px; height: 100%;"
         :key="$route.component"
       />
     </v-main>
 
     <div
       v-if="$store.state.loading"
-      style="flex-direction: column; background-color: rgba(0, 0, 0, 0.5); position: absolute; top: 0; left: 0; width: 100%; height: 100%; "
+      style="
+        flex-direction: column;
+        background-color: rgba(0, 0, 0, 0.5);
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      "
       class="d-flex justify-center"
     >
       <div class="d-flex justify-center">
         <v-progress-circular
           indeterminate
           color="grey lighten-5"
-          style="position: absolute; top: 50vh"
+          style="position: absolute; top: 50vh;"
         ></v-progress-circular>
       </div>
     </div>
