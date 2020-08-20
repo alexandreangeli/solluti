@@ -6,13 +6,7 @@
           v-for="item in menuItems"
           :key="item.text"
           link
-          @click="
-            () => {
-              if ($router.history.current.name != item.route) {
-                $router.push({ path: item.route });
-              }
-            }
-          "
+          @click="() => goToRoute(item.route)"
         >
           <v-list-item-action>
             <v-icon
@@ -40,9 +34,15 @@
         max-width="25px"
         large
         src="http://www.solluti.com.br/img/navbar/logotipo-branco.png"
+        style="cursor: pointer"
+        @click="() => goToRoute('home')"
       />
 
-      <v-toolbar-title class="mr-12 align-center ">
+      <v-toolbar-title
+        class="mr-12 align-center "
+        style="cursor: pointer"
+        @click="() => goToRoute('home')"
+      >
         SOLLUTI
       </v-toolbar-title>
       <v-spacer></v-spacer>
@@ -93,6 +93,13 @@ export default {
   },
   created() {
     this.$vuetify.theme.dark = true;
+  },
+  methods: {
+    goToRoute(routeName) {
+      if (this.$router.history.current.name != routeName) {
+        this.$router.push({ name: routeName });
+      }
+    },
   },
 };
 </script>

@@ -32,7 +32,7 @@
       <div class="d-flex justify-center" style="margin-bottom: 10px">
         <div
           class="d-flex justify-space-between"
-          style="width: 90%; position: relative"
+          style="width: 85%; position: relative"
         >
           <div style="position: absolute; bottom: 0px;" color="primary">
             {{ pagingIndex + selectedPhotoIndex + 1 }}/{{ photos.length }}
